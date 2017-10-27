@@ -1,5 +1,5 @@
 <template>
-	<div class='content-cell project' v-bind:style="{ 'background-image': 'url(' + project.hero_image.sizes.medium_large + ')' }">
+	<div class='content-cell project'>
 		{{project.project_name}}
 	</div>
 </template>
