@@ -20,17 +20,52 @@ export function createRouter () {
   // Based on environment special routes
   if( process.env.NODE_ENV != 'production' ){
     _router.addRoutes([
-      { path: '/style', components: {StyleGuide}, props: true }
+      { path: '/style', component: StyleGuide, props: true }
     ]);
   }
 
   // Default routes
   _router.addRoutes([
-    { path: '/search', components: {ContentView, BizWidgetView}, props: true },
-    { path: '/search/:project_search', components: {ContentView, BizWidgetView}, props: true },
-    { path: '/:discipline', components: {ContentView, BizWidgetView}, props: true },
-    { path: '/:discipline/:project', components: {ContentView, BizWidgetView}, props: true },
-    { path: '/', components: {ContentView, BizWidgetView}, props: true }
+    { 
+      path: '/search',
+      components: {
+        ContentView,
+        BizWidgetView
+      },
+      props: true 
+    },
+    { 
+      path: '/search/:project_search',
+      components: {
+        ContentView, 
+        BizWidgetView
+      }, 
+      props: true 
+    },
+    { 
+      path: '/:discipline',
+      components: {
+        ContentView, 
+        BizWidgetView
+      }, 
+      props: true 
+    },
+    { 
+      path: '/:discipline/:project', 
+      components: {
+        ContentView, 
+        BizWidgetView
+      }, 
+      props: true 
+    },
+    { 
+      path: '/', 
+      components: {
+        ContentView, 
+        BizWidgetView
+      }, 
+      props: true 
+    }
   ]);
 
   return _router;

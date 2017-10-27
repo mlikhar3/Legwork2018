@@ -1,45 +1,61 @@
 <template>
-  <div id="content" v-show="projects">
+  <div id="content" v-if="projects.length > 0">
     <div id="content-inner">
-      <p>Page: {{ discipline }}</p>
-      <p>Next: <router-link v-bind:to="{ path: nextPageLink }">{{ nextPage }}</router-link></p>
-      <p v-show="project_search">Search: {{ project_search }}</p>
-      <ul v-show="projects">
-        <li v-for="project in projects">
-          {{ project.project_name }}
-        </li>
-      </ul>
+      <div id='content-cells'>
+        <content-cell-view v-for="content in projects" :key="content.slug" :content="content"></content-cell-view>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import ContentCellView from 'components/content-view/ContentCellView.vue';
+
 export default {
   name: 'content-view',
+
+  /*
+  ------------------------------------------
+  | components:void (-)
+  ------------------------------------------ */
+  components: {
+    ContentCellView
+  },
+
+  /*
+  ------------------------------------------
+  | computed:void (-)
+  |
+  | Computed properties
+  ------------------------------------------ */
   computed: {
-    project_search () {
-      return this.$route.params.project_search;
-    },
-    discipline () {
-      return this.$route.params.discipline;
-    },
-    nextPage () {
-      return this.$store.getters.nextPage;
-    },
-    nextPageLink () {
-      return '/' + this.$store.getters.nextPage;
-    },
+
+    /*
+    ------------------------------------------
+    | projects:void (-)
+    |
+    | Get the projects from the store based
+    | on the current page.
+    ------------------------------------------ */
     projects () {
       return this.$store.getters.projects;
     }
   },
+
+  /*
+  ------------------------------------------
+  | ssrInit:void (-)
+  |
+  | Fetch the projects and fill the store
+  | This happens serverside.
+  ------------------------------------------ */
   ssrInit ({ store, route }) {
     return store.dispatch('FETCH_PROJECTS');
   }
 };
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 @import "src/styles/global"
 
 #content
@@ -50,21 +66,10 @@ export default {
     grid-column: 3 / span 20
     grid-row: 1
 
-    ul
+    #content-cells
       display: flex
       flex-direction: row
       justify-content: space-between
       flex-wrap: wrap
       margin-top: span(1, 20)
-
-      li
-        display: inline-block
-        width: span(9, 20)
-        height: 0
-        padding-bottom: span(9, 20)
-        background:
-          color: $gray
-          size: cover
-          position: center
-        margin-bottom: span(2, 20)
 </style>
