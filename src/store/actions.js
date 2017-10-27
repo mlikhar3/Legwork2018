@@ -19,6 +19,9 @@ export default {
           });
         });
         commit('PROJECTS', _projects);
+      })
+      .catch( (e) => {
+        console.log('error: ' + e);
       });
   },
 
